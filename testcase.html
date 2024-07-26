@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PDF download testcase</title>
+  <script type="text/javascript">
+    const encodedBase64PDF = 'JVBERi0xLjIgCjkgMCBvYmoKPDwKPj4Kc3RyZWFtCkJULyAzMiBUZiggIEhlbGxvLCBZYW5kZXghICAgKScgRVQKZW5kc3RyZWFtCmVuZG9iago0IDAgb2JqCjw8Ci9UeXBlIC9QYWdlCi9QYXJlbnQgNSAwIFIKL0NvbnRlbnRzIDkgMCBSCj4+CmVuZG9iago1IDAgb2JqCjw8Ci9LaWRzIFs0IDAgUiBdCi9Db3VudCAxCi9UeXBlIC9QYWdlcwovTWVkaWFCb3ggWyAwIDAgMzUwIDMwIF0KPj43CmVuZG9iagozIDAgb2JqCjw8Ci9QYWdlcyA1IDAgUgovVHlwZSAvQ2F0YWxvZwo+PgplbmRvYmoKdHJhaWxlcgo8PAovUm9vdCAzIDAgUgo+PgolJUVPRg=='
+
+    function download(mimeType) {
+      fetch('data:' + mimeType + ';base64,' + encodedBase64PDF)
+        .then(res => res.blob())
+        .then(blob => {
+          let link = document.createElement('a')
+          link.href = window.URL.createObjectURL(blob, {type: mimeType})
+          link.target = '_blank'
+          document.body.appendChild(link)
+          link.click()
+          document.body.removeChild(link)
+        })
+    }
+  </script>
+</head>
+<body>
+<button onclick="download('application/pdf')">Download as application/pdf</button>
+<button onclick="download('application/x-pdf')">Download as application/x-pdf</button>
+</body>
+</html>
